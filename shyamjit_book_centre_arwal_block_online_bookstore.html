@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shyamjit Book Centre | Arwal Block - Online Bookstore</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        fkBlue: '#2874f0',
+                        fkBlueDark: '#1c5dc9',
+                        fkYellow: '#ffe500',
+                        fkOrange: '#fb641b',
+                        fkGreen: '#388e3c',
+                        fkBg: '#f1f3f6',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-fkBg text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- Top Store Info Strip -->
+    <div class="bg-fkBlueDark text-white text-xs py-1.5 px-3 sm:px-6 border-b border-blue-400/30">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-3 flex-wrap">
+                <span class="flex items-center gap-1 font-medium text-fkYellow">
+                    <i class="fa-solid fa-truck-fast"></i> Free Delivery within 1.5 km
+                </span>
+                <span class="hidden sm:inline text-blue-200">|</span>
+                <span class="flex items-center gap-1">
+                    <i class="fa-solid fa-location-dot text-blue-200"></i> Arwal Block, Opp. Sudha Dairy
+                </span>
+            </div>
+            <div class="flex items-center gap-3 sm:gap-4 flex-wrap">
+                <span class="flex items-center gap-1">
+                    <i class="fa-regular fa-clock text-fkYellow"></i> 8:00 AM - 9:00 PM
+                </span>
+                <a href="tel:9852792631" class="hover:underline flex items-center gap-1 font-medium">
+                    <i class="fa-solid fa-phone text-green-300"></i> 9852792631
+                </a>
+                <a href="tel:7250705223" class="hidden md:flex hover:underline items-center gap-1 text-blue-100">
+                    / 7250705223
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Flipkart-Style Sticky Header -->
+    <header class="bg-fkBlue sticky top-0 z-40 shadow-md">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5">
+            <div class="flex items-center justify-between gap-3 sm:gap-6">
+                
+                <!-- Brand Logo -->
+                <a href="#" onclick="resetFilters()" class="flex items-center gap-2.5 shrink-0 group">
+                    <!-- Custom Bookstore SVG Emblem -->
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 bg-fkYellow rounded-lg flex items-center justify-center shadow-sm transform group-hover:scale-105 transition">
+                        <svg class="w-6 h-6 text-fkBlue" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col leading-tight">
+                        <span class="text-white font-extrabold text-base sm:text-xl tracking-tight">
+                            Shyamjit <span class="text-fkYellow">Books</span>
+                        </span>
+                        <span class="text-[10px] sm:text-xs italic text-blue-100 flex items-center gap-1">
+                            Arwal Plus <i class="fa-solid fa-star text-fkYellow text-[9px]"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Desktop Search Bar -->
+                <div class="hidden md:flex flex-1 max-w-2xl relative">
+                    <input type="text" id="desktopSearchInput" onkeyup="handleSearch(this.value)" 
+                        placeholder="Search for NCERT, JEE books, Stationery, Novels..." 
+                        class="w-full py-2 pl-4 pr-11 rounded-sm bg-white text-sm text-gray-800 placeholder-gray-500 focus:outline-none shadow-inner">
+                    <button onclick="handleSearch(document.getElementById('desktopSearchInput').value)" 
+                        class="absolute right-0 top-0 bottom-0 px-4 text-fkBlue hover:text-fkBlueDark transition">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+
+                <!-- Right Action Buttons -->
+                <div class="flex items-center gap-2 sm:gap-5 shrink-0">
+                    <!-- Admin / Owner Button -->
+                    <button id="adminHeaderBtn" onclick="openAdminModal()" 
+                        class="bg-white text-fkBlue hover:bg-blue-50 font-semibold text-xs sm:text-sm px-3 sm:px-5 py-1.5 rounded-sm shadow-sm transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <span id="adminBtnText">Owner Login</span>
+                    </button>
+
+                    <!-- WhatsApp Quick Contact -->
+                    <a href="https://wa.me/919852792631?text=Hello%20Shyamjit%20Book%20Centre%2C%20I%20want%20to%20enquire%20about%20a%20book." target="_blank"
+                        class="hidden lg:flex items-center gap-1.5 text-white hover:text-fkYellow font-medium text-sm transition">
+                        <i class="fa-brands fa-whatsapp text-lg text-green-300"></i>
+                        <span>Ask on WhatsApp</span>
+                    </a>
+
+                    <!-- Cart Button -->
+                    <button onclick="toggleCartDrawer(true)" class="relative flex items-center gap-2 text-white font-semibold text-sm p-2 rounded-lg hover:bg-fkBlueDark transition">
+                        <div class="relative">
+                            <i class="fa-solid fa-cart-shopping text-lg sm:text-xl"></i>
+                            <span id="cartBadge" class="absolute -top-2 -right-2.5 bg-fkYellow text-fkBlueDark text-[11px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow">
+                                0
+                            </span>
+                        </div>
+                        <span class="hidden sm:inline">Cart</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <div class="mt-2.5 md:hidden relative">
+                <input type="text" id="mobileSearchInput" onkeyup="handleSearch(this.value)" 
+                    placeholder="Search books, authors, stationery..." 
+                    class="w-full py-2 pl-3.5 pr-10 rounded-sm bg-white text-sm text-gray-800 placeholder-gray-500 focus:outline-none">
+                <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-2.5 text-fkBlue"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Category Navigation Bar (Flipkart Style) -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 overflow-x-auto">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-start sm:justify-center gap-3 sm:gap-8 min-w-max">
+            <button onclick="filterCategory('All')" data-cat="All" class="cat-btn active-cat flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg transition group">
+                <div class="w-10 h-10 rounded-full bg-blue-50 text-fkBlue flex items-center justify-center text-lg group-hover:scale-105 transition">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <span class="text-xs sm:text-sm font-semibold text-fkBlue">All Items</span>
+            </button>
+
+            <button onclick="filterCategory('School Books')" data-cat="School Books" class="cat-btn flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg transition group">
+                <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center text-lg group-hover:scale-105 transition">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                </div>
+                <span class="text-xs sm:text-sm font-medium text-gray-700 group-hover:text-fkBlue">School Books</span>
+            </button>
+
+            <button onclick="filterCategory('Competitive Exams / JEE')" data-cat="Competitive Exams / JEE" class="cat-btn flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg transition group">
+                <div class="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg group-hover:scale-105 transition">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <span class="text-xs sm:text-sm font-medium text-gray-700 group-hover:text-fkBlue">Competitive / JEE</span>
+            </button>
+
+            <button onclick="filterCategory('Stationery')" data-cat="Stationery" class="cat-btn flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg transition group">
+                <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center text-lg group-hover:scale-105 transition">
+                    <i class="fa-solid fa-pen-ruler"></i>
+                </div>
+                <span class="text-xs sm:text-sm font-medium text-gray-700 group-hover:text-fkBlue">Stationery</span>
+            </button>
+
+            <button onclick="filterCategory('Novels')" data-cat="Novels" class="cat-btn flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg transition group">
+                <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center text-lg group-hover:scale-105 transition">
+                    <i class="fa-solid fa-feather-pointed"></i>
+                </div>
+                <span class="text-xs sm:text-sm font-medium text-gray-700 group-hover:text-fkBlue">Novels & Literature</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-5">
+
+        <!-- Hero Promo Banner -->
+        <section class="bg-gradient-to-r from-fkBlue via-blue-600 to-indigo-700 rounded-xl p-5 sm:p-8 text-white shadow-md relative overflow-hidden">
+            <div class="relative z-10 max-w-2xl space-y-2.5">
+                <span class="inline-block bg-fkYellow text-fkBlueDark text-xs font-extrabold uppercase tracking-wider px-2.5 py-1 rounded">
+                    Arwal's Trusted Bookstore
+                </span>
+                <h1 class="text-2xl sm:text-4xl font-extrabold leading-tight">
+                    Shyamjit Book Centre
+                </h1>
+                <p class="text-sm sm:text-base text-blue-100">
+                    NCERT, Bihar Board, CBSE, JEE/NEET Guides, Premium Stationery & Best-selling Novels. 
+                    <strong class="text-fkYellow">Free Home Delivery within 1.5 km</strong> of Arwal Block!
+                </p>
+                <div class="pt-2 flex flex-wrap items-center gap-3 text-xs sm:text-sm">
+                    <span class="bg-white/15 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                        <i class="fa-solid fa-location-dot text-fkYellow"></i> Opp. Sudha Dairy, Arwal Block
+                    </span>
+                    <span class="bg-white/15 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                        <i class="fa-solid fa-clock text-fkYellow"></i> Open Daily: 8:00 AM – 9:00 PM
+                    </span>
+                    <span id="liveSyncIndicator" class="bg-emerald-500/25 border border-emerald-300/40 px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-emerald-100">
+                        <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span> Live Store Catalog
+                    </span>
+                </div>
+            </div>
+            <!-- Decorative Icon -->
+            <i class="fa-solid fa-book-open hidden md:block absolute right-10 -bottom-6 text-[170px] text-white/10 rotate-12 pointer-events-none"></i>
+        </section>
+
+        <!-- Owner Mode Status Banner (Only visible when logged in as Owner) -->
+        <div id="ownerControlBar" class="hidden bg-amber-50 border-2 border-amber-400 rounded-xl p-4 flex flex-wrap items-center justify-between gap-3 shadow-sm">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center text-lg shrink-0">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                <div>
+                    <h2 class="font-bold text-amber-900 text-sm sm:text-base">Owner / Admin Mode Active</h2>
+                    <p class="text-xs text-amber-800">Manage store listings, update prices, or change your Owner Panel password in Settings.</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+                <button onclick="openBookFormModal()" class="bg-fkBlue hover:bg-fkBlueDark text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-lg shadow transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-plus"></i> Add New Book
+                </button>
+                <button onclick="openOwnerSettingsModal()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs sm:text-sm font-semibold px-3.5 py-2 rounded-lg shadow transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-gear"></i> Settings
+                </button>
+                <button onclick="logoutOwner()" class="bg-white hover:bg-red-50 text-red-600 border border-red-200 text-xs sm:text-sm font-semibold px-3 py-2 rounded-lg transition">
+                    Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Catalog Header & Sorting -->
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-wrap items-center justify-between gap-3">
+            <div>
+                <h2 id="catalogHeading" class="text-lg sm:text-xl font-bold text-gray-900">All Books & Stationery</h2>
+                <p id="itemCountText" class="text-xs text-gray-500 mt-0.5">Showing all available items in stock</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <label for="sortSelect" class="text-xs font-medium text-gray-500">Sort by:</label>
+                <select id="sortSelect" onchange="renderCatalog()" class="text-xs sm:text-sm border border-gray-300 rounded-lg px-3 py-1.5 bg-white focus:outline-none focus:border-fkBlue">
+                    <option value="featured">Featured</option>
+                    <option value="priceLow">Price: Low to High</option>
+                    <option value="priceHigh">Price: High to Low</option>
+                    <option value="discount">Highest Discount</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Product Catalog Grid -->
+        <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+            <!-- Dynamically injected book cards -->
+        </div>
+
+        <!-- Empty Search State -->
+        <div id="emptyState" class="hidden bg-white rounded-xl p-10 text-center shadow-sm border border-gray-100">
+            <div class="w-16 h-16 bg-blue-50 text-fkBlue rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+                <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-800">No books matched your search</h3>
+            <p class="text-sm text-gray-500 mt-1 max-w-md mx-auto">Try searching with a different keyword or ask us directly on WhatsApp—we arrange special order books too!</p>
+            <div class="mt-4 flex justify-center gap-3">
+                <button onclick="resetFilters()" class="bg-fkBlue text-white text-sm font-semibold px-5 py-2 rounded-lg hover:bg-fkBlueDark transition">
+                    Reset Filters
+                </button>
+                <a href="https://wa.me/919852792631?text=Hello%20Shyamjit%20Book%20Centre%2C%20I%20am%20looking%20for%20a%20book%20not%20listed%20on%20the%20website." target="_blank" 
+                   class="bg-green-600 text-white text-sm font-semibold px-5 py-2 rounded-lg hover:bg-green-700 transition flex items-center gap-1.5">
+                    <i class="fa-brands fa-whatsapp"></i> Request Book
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Store Footer -->
+    <footer class="bg-slate-900 text-slate-300 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- About Store -->
+            <div class="space-y-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 bg-fkYellow text-fkBlue rounded-lg flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-book"></i>
+                    </span>
+                    <span class="text-white font-bold text-lg">Shyamjit Book Centre</span>
+                </div>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    Your one-stop destination in Arwal for School textbooks, Competitive Exam preparation books (JEE, NEET, BPSC, SSC), quality stationery, and novels.
+                </p>
+                <div class="inline-flex items-center gap-2 bg-emerald-950/80 border border-emerald-700/50 text-emerald-300 text-xs font-semibold px-3 py-1.5 rounded-lg">
+                    <i class="fa-solid fa-motorcycle"></i> Free Home Delivery within 1.5 km!
+                </div>
+            </div>
+
+            <!-- Address & Hours -->
+            <div class="space-y-2.5 text-sm">
+                <h3 class="text-white font-semibold uppercase tracking-wider text-xs">Visit Our Store</h3>
+                <p class="flex items-start gap-2.5 text-slate-300">
+                    <i class="fa-solid fa-location-dot text-fkYellow mt-1"></i>
+                    <span>Arwal Block, Opposite of Sudha Dairy,<br>Arwal, Bihar</span>
+                </p>
+                <p class="flex items-center gap-2.5 text-slate-300">
+                    <i class="fa-regular fa-clock text-fkYellow"></i>
+                    <span>Opening Hours: <strong>8:00 AM to 9:00 PM</strong> (All Days)</span>
+                </p>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="space-y-2.5 text-sm">
+                <h3 class="text-white font-semibold uppercase tracking-wider text-xs">Direct Contact & Orders</h3>
+                <p class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-phone text-green-400"></i>
+                    <span>Primary: <a href="tel:9852792631" class="text-white font-semibold hover:underline">9852792631</a></span>
+                </p>
+                <p class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-phone-volume text-blue-400"></i>
+                    <span>Alternate: <a href="tel:7250705223" class="text-white font-semibold hover:underline">7250705223</a></span>
+                </p>
+                <div class="pt-2">
+                    <a href="https://wa.me/919852792631?text=Hello%20Shyamjit%20Book%20Centre!" target="_blank"
+                       class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold text-xs px-4 py-2.5 rounded-lg transition">
+                        <i class="fa-brands fa-whatsapp text-base"></i> Chat on WhatsApp (9852792631)
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-slate-800 py-4 text-center text-xs text-slate-500">
+            &copy; 2026 Shyamjit Book Centre, Arwal Block. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- =====================================================================
+         SHOPPING CART DRAWER (SLIDE-OVER)
+    ====================================================================== -->
+    <div id="cartOverlay" onclick="toggleCartDrawer(false)" class="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 hidden transition-opacity"></div>
+    <aside id="cartDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <!-- Drawer Header -->
+        <div class="bg-fkBlue text-white px-5 py-4 flex items-center justify-between shadow">
+            <div class="flex items-center gap-2.5">
+                <i class="fa-solid fa-cart-shopping text-fkYellow text-lg"></i>
+                <h2 class="font-bold text-base sm:text-lg">My Book Cart (<span id="drawerCartCount">0</span>)</h2>
+            </div>
+            <button onclick="toggleCartDrawer(false)" class="w-8 h-8 rounded-full hover:bg-fkBlueDark flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Free Delivery Banner inside Cart -->
+        <div class="bg-emerald-50 border-b border-emerald-200 px-4 py-2.5 flex items-center gap-2 text-xs text-emerald-800 font-medium">
+            <i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i>
+            <span>Eligible for <strong>FREE Delivery within 1.5 km</strong> of Arwal Block!</span>
+        </div>
+
+        <!-- Cart Items List -->
+        <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+            <!-- Dynamic Cart Items -->
+        </div>
+
+        <!-- Customer Address / Delivery Toggle & Checkout Summary -->
+        <div id="cartFooter" class="border-t border-gray-200 bg-white p-4 space-y-3 shadow-inner">
+            <!-- Delivery Distance Option -->
+            <div class="bg-blue-50/70 p-2.5 rounded-lg border border-blue-100 space-y-2">
+                <label class="text-xs font-bold text-gray-700 block">Delivery Option:</label>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <label class="flex items-center gap-1.5 bg-white p-2 rounded border border-blue-200 cursor-pointer">
+                        <input type="radio" name="deliveryZone" value="free" checked onchange="renderCart()" class="text-fkBlue">
+                        <span class="font-medium text-gray-800">Within 1.5 km <strong class="text-fkGreen">(FREE)</strong></span>
+                    </label>
+                    <label class="flex items-center gap-1.5 bg-white p-2 rounded border border-gray-200 cursor-pointer">
+                        <input type="radio" name="deliveryZone" value="pickup" onchange="renderCart()" class="text-fkBlue">
+                        <span class="font-medium text-gray-800">Store Pickup <strong class="text-fkGreen">(FREE)</strong></span>
+                    </label>
+                </div>
+                <input type="text" id="customerAddressInput" placeholder="Enter your Name & Landmark / Address in Arwal..." 
+                    class="w-full text-xs px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-fkBlue">
+            </div>
+
+            <!-- Price Breakdown -->
+            <div class="space-y-1 text-xs sm:text-sm">
+                <div class="flex justify-between text-gray-600">
+                    <span>Total MRP</span>
+                    <span id="cartTotalMrp" class="line-through">₹0</span>
+                </div>
+                <div class="flex justify-between text-fkGreen font-medium">
+                    <span>Store Discount</span>
+                    <span id="cartTotalDiscount">- ₹0</span>
+                </div>
+                <div class="flex justify-between text-gray-600">
+                    <span>Delivery Charges (Within 1.5 km)</span>
+                    <span class="text-fkGreen font-bold">FREE</span>
+                </div>
+                <div class="flex justify-between text-base font-extrabold text-gray-900 pt-2 border-t border-dashed border-gray-300">
+                    <span>Total Payable</span>
+                    <span id="cartFinalAmount">₹0</span>
+                </div>
+            </div>
+
+            <!-- Direct WhatsApp Order Placement Button -->
+            <button onclick="checkoutViaWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition flex items-center justify-center gap-2 text-sm sm:text-base">
+                <i class="fa-brands fa-whatsapp text-xl"></i>
+                <span>Place Order on WhatsApp</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- =====================================================================
+         STRICT OWNER / ADMIN LOGIN MODAL
+    ====================================================================== -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl animate-fade-in">
+            <div class="bg-fkBlue p-5 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-shield-halved text-fkYellow text-xl"></i>
+                    <div>
+                        <h3 class="font-bold text-lg leading-tight">Owner / Admin Access</h3>
+                        <p class="text-xs text-blue-100">Shyamjit Book Centre Inventory Control</p>
+                    </div>
+                </div>
+                <button onclick="closeAdminModal()" class="text-white/80 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleAdminLogin(event)" class="p-6 space-y-4">
+                <div id="loginHintBox" class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-900 flex items-start gap-2">
+                    <i class="fa-solid fa-circle-info text-amber-600 mt-0.5"></i>
+                    <div>
+                        <strong>Restricted Area:</strong> Only the Store Owner can add books, upload photos, edit prices, or delete items.
+                        <div id="defaultPasswordHint" class="mt-1 font-mono bg-white px-2 py-0.5 rounded border border-amber-300 inline-block">
+                            Default Password: <strong>admin123</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Owner Password</label>
+                    <div class="relative">
+                        <input type="password" id="adminPasswordInput" required placeholder="Enter owner password..." 
+                            class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-fkBlue pr-10">
+                        <button type="button" onclick="toggleInputVisibility('adminPasswordInput', 'eyeIcon')" class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600">
+                            <i id="eyeIcon" class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                    <p id="loginErrorMsg" class="hidden text-xs text-red-600 font-semibold mt-1.5">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Incorrect password! Please enter the valid Owner Password.
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAdminModal()" class="px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-fkBlue hover:bg-fkBlueDark text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow transition">
+                        Unlock Owner Panel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         OWNER SETTINGS MODAL (CHANGE PASSWORD)
+    ====================================================================== -->
+    <div id="ownerSettingsModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl">
+            <div class="bg-slate-900 p-5 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-lg bg-fkYellow text-slate-900 flex items-center justify-center text-base">
+                        <i class="fa-solid fa-gear"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg leading-tight">Owner Panel Settings</h3>
+                        <p class="text-xs text-slate-300">Security & Password Management</p>
+                    </div>
+                </div>
+                <button onclick="closeOwnerSettingsModal()" class="text-white/80 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleChangeOwnerPassword(event)" class="p-6 space-y-4">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 text-xs text-blue-900 flex items-start gap-2">
+                    <i class="fa-solid fa-shield-halved text-fkBlue mt-0.5"></i>
+                    <span>Update your Owner Panel password below. The new password syncs automatically across your devices.</span>
+                </div>
+
+                <!-- Current Password -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Current Password *</label>
+                    <div class="relative">
+                        <input type="password" id="currentOwnerPwdInput" required placeholder="Enter current password..." 
+                            class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-fkBlue pr-10">
+                        <button type="button" onclick="toggleInputVisibility('currentOwnerPwdInput', 'currEyeIcon')" class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600">
+                            <i id="currEyeIcon" class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- New Password -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">New Password (Min 4 Characters) *</label>
+                    <div class="relative">
+                        <input type="password" id="newOwnerPwdInput" required minlength="4" placeholder="Enter new password..." 
+                            class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-fkBlue pr-10">
+                        <button type="button" onclick="toggleInputVisibility('newOwnerPwdInput', 'newEyeIcon')" class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600">
+                            <i id="newEyeIcon" class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Confirm New Password -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Confirm New Password *</label>
+                    <div class="relative">
+                        <input type="password" id="confirmOwnerPwdInput" required minlength="4" placeholder="Re-enter new password..." 
+                            class="w-full px-3.5 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-fkBlue pr-10">
+                        <button type="button" onclick="toggleInputVisibility('confirmOwnerPwdInput', 'confEyeIcon')" class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600">
+                            <i id="confEyeIcon" class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Validation Error Message -->
+                <p id="settingsErrorMsg" class="hidden text-xs text-red-600 font-semibold bg-red-50 border border-red-200 rounded-lg p-2.5">
+                    <i class="fa-solid fa-triangle-exclamation"></i> <span id="settingsErrorText">Error message</span>
+                </p>
+
+                <div class="flex items-center justify-end gap-2 pt-2 border-t border-gray-100">
+                    <button type="button" onclick="closeOwnerSettingsModal()" class="px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-fkBlue hover:bg-fkBlueDark text-white font-bold text-sm px-5 py-2.5 rounded-lg shadow transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-key"></i> Update Password
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         OWNER ADD / EDIT BOOK MODAL (ONLY ACCESSIBLE WHEN LOGGED IN)
+    ====================================================================== -->
+    <div id="bookFormModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl my-8">
+            <div class="bg-fkBlue p-4 sm:p-5 text-white flex items-center justify-between">
+                <h3 id="bookFormTitle" class="font-bold text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-book-medical text-fkYellow"></i> Add New Book / Item
+                </h3>
+                <button onclick="closeBookFormModal()" class="text-white/80 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="saveBookListing(event)" class="p-5 sm:p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+                <!-- Hidden ID field for Editing -->
+                <input type="hidden" id="editBookId">
+
+                <!-- Book Title -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Book / Item Title *</label>
+                    <input type="text" id="bookTitleInput" required placeholder="e.g., NCERT Class 12 Physics Part 1 & 2" 
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-fkBlue">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Author / Brand *</label>
+                        <input type="text" id="bookAuthorInput" required placeholder="e.g., NCERT / H.C. Verma / Classmate" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-fkBlue">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Category *</label>
+                        <select id="bookCategoryInput" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:border-fkBlue">
+                            <option value="School Books">School Books</option>
+                            <option value="Competitive Exams / JEE">Competitive Exams / JEE</option>
+                            <option value="Stationery">Stationery</option>
+                            <option value="Novels">Novels</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Original MRP (₹) *</label>
+                        <input type="number" id="bookMrpInput" required min="1" placeholder="e.g., 450" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-fkBlue">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Selling Price (₹) *</label>
+                        <input type="number" id="bookPriceInput" required min="1" placeholder="e.g., 380" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-fkBlue">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Stock Status *</label>
+                        <select id="bookStockInput" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:border-fkBlue">
+                            <option value="In Stock">In Stock</option>
+                            <option value="Limited Stock">Limited Stock</option>
+                            <option value="Out of Stock">Out of Stock</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Photo Upload or Image URL -->
+                <div class="bg-gray-50 p-3.5 rounded-xl border border-gray-200 space-y-2.5">
+                    <label class="block text-xs font-bold text-gray-700">Book Cover Photo (Upload File or Paste URL)</label>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3 items-center">
+                        <img id="bookImagePreview" src="https://placehold.co/120x160/2874f0/ffffff?text=Book+Cover" alt="Preview" 
+                            class="w-20 h-24 object-cover rounded-lg border border-gray-300 bg-white shrink-0">
+                        
+                        <div class="flex-1 w-full space-y-2">
+                            <label class="flex items-center justify-center gap-2 w-full bg-white hover:bg-blue-50 text-fkBlue border border-dashed border-fkBlue rounded-lg py-2 px-3 text-xs font-semibold cursor-pointer transition">
+                                <i class="fa-solid fa-camera"></i>
+                                <span>Choose Photo from Device</span>
+                                <input type="file" id="bookFileInput" accept="image/*" onchange="handlePhotoUpload(event)" class="hidden">
+                            </label>
+                            <input type="text" id="bookImageUrlInput" oninput="updateImagePreviewFromUrl(this.value)" placeholder="Or paste image URL here..." 
+                                class="w-full px-3 py-1.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:border-fkBlue">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-2 border-t border-gray-100">
+                    <button type="button" onclick="closeBookFormModal()" class="px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-fkOrange hover:bg-orange-600 text-white font-bold text-sm px-6 py-2.5 rounded-lg shadow transition">
+                        Save Listing
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container (Replaces alert()) -->
+    <div id="toastContainer" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- JavaScript Application Logic with Firebase Cloud Sync -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // =========================================================================
+        // 1. STORE CONSTANTS & INITIAL CATALOG SEED DATA
+        // =========================================================================
+        const STORE_PHONE = "919852792631";
+        const DEFAULT_OWNER_PASSWORD = "admin123";
+        const LOCAL_PWD_KEY = "shyamjit_owner_password";
+
+        // Load active password from localStorage fallback or default
+        let activeOwnerPassword = localStorage.getItem(LOCAL_PWD_KEY) || DEFAULT_OWNER_PASSWORD;
+
+        const defaultBooks = [
+            {
+                id: "bk-1",
+                title: "NCERT Class 12 Physics Part 1 & 2 (Latest Edition)",
+                author: "NCERT",
+                category: "School Books",
+                mrp: 360,
+                price: 310,
+                stock: "In Stock",
+                image: "https://placehold.co/300x380/047857/ffffff?text=NCERT+Class+12+Physics"
+            },
+            {
+                id: "bk-2",
+                title: "Concepts of Physics (Vol. 1 & 2) - JEE Main & Advanced",
+                author: "H.C. Verma",
+                category: "Competitive Exams / JEE",
+                mrp: 980,
+                price: 799,
+                stock: "In Stock",
+                image: "https://placehold.co/300x380/1e3a8a/ffffff?text=H.C.+Verma+Physics"
+            },
+            {
+                id: "bk-3",
+                title: "Mathematics for Class 10 with MCQ & Case Study",
+                author: "R.D. Sharma",
+                category: "School Books",
+                mrp: 695,
+                price: 540,
+                stock: "In Stock",
+                image: "https://placehold.co/300x380/b45309/ffffff?text=R.D.+Sharma+Class+10"
+            },
+            {
+                id: "bk-4",
+                title: "Advanced Problems in Organic Chemistry for JEE",
+                author: "M.S. Chouhan",
+                category: "Competitive Exams / JEE",
+                mrp: 750,
+                price: 595,
+                stock: "In Stock",
+                image: "https://placehold.co/300x380/0369a1/ffffff?text=MS+Chouhan+Organic"
+            },
+            {
+                id: "bk-5",
+                title: "Classmate Pulse Spiral Notebook Pack (Set of 6, 300 Pages)",
+                author: "ITC Classmate",
+                category: "Stationery",
+                mrp: 480,
+                price: 395,
+                stock: "In Stock",
+                image: "https://placehold.co/300x380/6d28d9/ffffff?text=Classmate+Notebooks"
+            },
+            {
+                id: "bk-6",
+                title: "Objective NCERT at your Fingertips for NEET-JEE Biology",
+                author: "MTG Editorial Board",
+                category: "Competitive Exams / JEE",
+                mrp: 850,
+                price: 680,
+                stock: "Limited Stock",
+                image: "https://placehold.co/300x380/0f766e/ffffff?text=MTG+NEET+Biology"
+            },
+            {
+                id: "bk-7",
+                title: "Godaan (गोदान) - Classic Hindi Literature Novel",
+                author: "Munshi Premchand",
+                category: "Novels",
+                mrp: 299,
+                price: 210,
+                stock: "In Stock",
+                image: "https://placehold.co/300x380/be123c/ffffff?text=Godaan+-+Premchand"
+            },
+            {
+                id: "bk-8",
+                title: "Camel Geometry Box & Reynolds Trimax Gel Pen Value Kit",
+                author: "Camlin & Reynolds",
+                category: "Stationery",
+                mrp: 320,
+                price: 255,
+                stock: "In Stock",
+                image: "https://placehold.co/300x380/4338ca/ffffff?text=Geometry+%26+Pen+Kit"
+            }
+        ];
+
+        // =========================================================================
+        // 2. APPLICATION STATE & FIREBASE INITIALIZATION
+        // =========================================================================
+        let books = [...defaultBooks];
+        let cart = [];
+        let isOwnerLoggedIn = sessionStorage.getItem("shyamjit_owner_auth") === "true";
+        let activeCategory = "All";
+        let searchQuery = "";
+        let uploadedBase64Image = "";
+
+        let db = null;
+        let auth = null;
+        let currentUser = null;
+        let booksCollectionRef = null;
+        let ownerSettingsDocRef = null;
+        let hasSeededInitialData = false;
+
+        function updateLoginHintUI() {
+            const hintBox = document.getElementById("defaultPasswordHint");
+            if (!hintBox) return;
+            if (activeOwnerPassword === DEFAULT_OWNER_PASSWORD) {
+                hintBox.innerHTML = `Default Password: <strong>admin123</strong>`;
+            } else {
+                hintBox.innerHTML = `<i class="fa-solid fa-lock text-amber-700"></i> Custom owner password is set (can be updated anytime in Owner Settings).`;
+            }
+        }
+
+        async function initFirebaseCloudSync() {
+            const indicator = document.getElementById("liveSyncIndicator");
+            try {
+                if (typeof __firebase_config === "undefined") {
+                    throw new Error("Firebase environment config not injected");
+                }
+                const firebaseConfig = JSON.parse(__firebase_config);
+                const appId = typeof __app_id !== "undefined" ? __app_id : "shyamjit-book-centre";
+
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                // Authenticate BEFORE accessing Firestore
+                if (typeof __initial_auth_token !== "undefined" && __initial_auth_token) {
+                    const cred = await signInWithCustomToken(auth, __initial_auth_token);
+                    currentUser = cred.user;
+                } else {
+                    const cred = await signInAnonymously(auth);
+                    currentUser = cred.user;
+                }
+
+                if (!currentUser) return;
+
+                // Public shared catalog & owner settings paths
+                booksCollectionRef = collection(db, "artifacts", appId, "public", "data", "books");
+                ownerSettingsDocRef = doc(db, "artifacts", appId, "public", "data", "settings", "ownerConfig");
+
+                // Real-time listener for Owner Password Settings across devices
+                onSnapshot(ownerSettingsDocRef, (docSnap) => {
+                    if (docSnap.exists() && docSnap.data().password) {
+                        activeOwnerPassword = docSnap.data().password;
+                        localStorage.setItem(LOCAL_PWD_KEY, activeOwnerPassword);
+                        updateLoginHintUI();
+                    }
+                }, (err) => {
+                    console.warn("Owner settings listener warning:", err.message);
+                });
+
+                // Real-time listener for Store Books Catalog
+                onSnapshot(booksCollectionRef, async (snapshot) => {
+                    if (snapshot.empty && !hasSeededInitialData) {
+                        hasSeededInitialData = true;
+                        for (const item of defaultBooks) {
+                            await setDoc(doc(booksCollectionRef, item.id), {
+                                ...item,
+                                updatedAt: Date.now()
+                            });
+                        }
+                        return;
+                    }
+
+                    const cloudBooks = [];
+                    snapshot.forEach((docSnap) => {
+                        cloudBooks.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+
+                    cloudBooks.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+                    books = cloudBooks;
+
+                    syncCartWithLatestCatalog();
+                    renderCatalog();
+                    renderCart();
+
+                    if (indicator) {
+                        indicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span> Cloud Synced Live`;
+                    }
+                }, (error) => {
+                    console.error("Firestore sync error:", error);
+                    if (indicator) {
+                        indicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-300"></span> Offline Catalog Mode`;
+                    }
+                });
+            } catch (err) {
+                console.warn("Running in local catalog mode:", err.message);
+                renderCatalog();
+            }
+        }
+
+        function syncCartWithLatestCatalog() {
+            cart = cart
+                .map(cartItem => {
+                    const latest = books.find(b => b.id === cartItem.id);
+                    if (!latest || latest.stock === "Out of Stock") return null;
+                    return { ...latest, qty: cartItem.qty };
+                })
+                .filter(Boolean);
+            updateCartBadge();
+        }
+
+        // =========================================================================
+        // 3. CATALOG RENDERING & FILTERING
+        // =========================================================================
+        function renderCatalog() {
+            const grid = document.getElementById("catalogGrid");
+            const emptyState = document.getElementById("emptyState");
+            const sortBy = document.getElementById("sortSelect").value;
+
+            let filtered = books.filter(book => {
+                const matchesCat = activeCategory === "All" || book.category === activeCategory;
+                const q = searchQuery.toLowerCase().trim();
+                const matchesQuery = !q || 
+                    book.title.toLowerCase().includes(q) || 
+                    book.author.toLowerCase().includes(q) || 
+                    book.category.toLowerCase().includes(q);
+                return matchesCat && matchesQuery;
+            });
+
+            if (sortBy === "priceLow") {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortBy === "priceHigh") {
+                filtered.sort((a, b) => b.price - a.price);
+            } else if (sortBy === "discount") {
+                filtered.sort((a, b) => {
+                    const discA = a.mrp > 0 ? ((a.mrp - a.price) / a.mrp) : 0;
+                    const discB = b.mrp > 0 ? ((b.mrp - b.price) / b.mrp) : 0;
+                    return discB - discA;
+                });
+            }
+
+            document.getElementById("itemCountText").textContent = 
+                `Showing ${filtered.length} ${filtered.length === 1 ? 'item' : 'items'} ${activeCategory !== 'All' ? 'in ' + activeCategory : ''}`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = "";
+                emptyState.classList.remove("hidden");
+                return;
+            }
+
+            emptyState.classList.add("hidden");
+
+            grid.innerHTML = filtered.map(book => {
+                const discountPct = book.mrp > book.price ? Math.round(((book.mrp - book.price) / book.mrp) * 100) : 0;
+                const stockStatus = book.stock || "In Stock";
+                const isOutOfStock = stockStatus === "Out of Stock";
+
+                const stockBadgeClass = isOutOfStock 
+                    ? "bg-red-100 text-red-700 border-red-200" 
+                    : stockStatus === "Limited Stock" 
+                        ? "bg-amber-100 text-amber-800 border-amber-200" 
+                        : "bg-emerald-50 text-emerald-700 border-emerald-200";
+
+                const whatsappText = encodeURIComponent(
+                    `Hello Shyamjit Book Centre (Arwal),\nI want to order this book:\n*${book.title}*\nAuthor/Brand: ${book.author}\nPrice: ₹${book.price}\nPlease confirm availability.`
+                );
+
+                const ownerButtonsHtml = isOwnerLoggedIn ? `
+                    <div class="mt-2 pt-2 border-t border-amber-200 bg-amber-50/80 -mx-4 -mb-4 px-4 py-2.5 flex items-center justify-between gap-2">
+                        <span class="text-[11px] font-bold text-amber-800 uppercase tracking-wide">Owner Actions:</span>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="openBookFormModal('${book.id}')" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-2.5 py-1 rounded shadow-xs transition flex items-center gap-1">
+                                <i class="fa-solid fa-pen"></i> Edit
+                            </button>
+                            <button onclick="deleteBookListing('${book.id}')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-semibold px-2.5 py-1 rounded shadow-xs transition flex items-center gap-1">
+                                <i class="fa-solid fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                ` : "";
+
+                return `
+                    <div class="bg-white rounded-xl border border-gray-200/80 shadow-xs hover:shadow-lg transition-all duration-200 flex flex-col justify-between overflow-hidden group ${isOutOfStock ? 'opacity-85' : ''}">
+                        <div>
+                            <!-- Book Image Container -->
+                            <div class="relative h-52 bg-gray-100 overflow-hidden flex items-center justify-center p-3">
+                                <img src="${book.image}" alt="${book.title}" 
+                                    onerror="this.src='https://placehold.co/300x380/2874f0/ffffff?text=Shyamjit+Books'"
+                                    class="h-full w-auto object-contain rounded shadow-xs group-hover:scale-105 transition duration-300 ${isOutOfStock ? 'grayscale' : ''}">
+                                
+                                ${discountPct > 0 ? `
+                                    <span class="absolute top-2.5 left-2.5 bg-fkGreen text-white text-[11px] font-bold px-2 py-0.5 rounded shadow-xs">
+                                        ${discountPct}% OFF
+                                    </span>
+                                ` : ''}
+
+                                <span class="absolute top-2.5 right-2.5 text-[10px] font-bold px-2 py-0.5 rounded border ${stockBadgeClass}">
+                                    ${stockStatus}
+                                </span>
+
+                                <span class="absolute bottom-2 right-2 bg-white/90 backdrop-blur-xs text-gray-700 text-[10px] font-semibold px-2 py-0.5 rounded border border-gray-200">
+                                    ${book.category}
+                                </span>
+                            </div>
+
+                            <!-- Book Details -->
+                            <div class="p-4 pb-2">
+                                <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider truncate">${book.author}</p>
+                                <h3 class="font-bold text-gray-900 text-sm sm:text-base leading-snug line-clamp-2 mt-0.5 min-h-[2.5rem]" title="${book.title}">
+                                    ${book.title}
+                                </h3>
+
+                                <!-- Price Row -->
+                                <div class="mt-2.5 flex items-baseline gap-2 flex-wrap">
+                                    <span class="text-lg sm:text-xl font-extrabold text-gray-900">₹${book.price}</span>
+                                    ${book.mrp > book.price ? `<span class="text-xs text-gray-400 line-through">₹${book.mrp}</span>` : ''}
+                                    ${discountPct > 0 ? `<span class="text-xs font-bold text-fkGreen">${discountPct}% off</span>` : ''}
+                                </div>
+
+                                <p class="text-[11px] text-emerald-700 font-medium mt-1 flex items-center gap-1">
+                                    <i class="fa-solid fa-truck text-emerald-600"></i> Free Delivery (1.5 km)
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="p-4 pt-2 space-y-2">
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="addToCart('${book.id}')" ${isOutOfStock ? 'disabled' : ''}
+                                    class="${isOutOfStock ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-fkYellow hover:bg-yellow-400 text-gray-900'} font-bold text-xs py-2.5 px-2 rounded-lg shadow-xs transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-cart-plus"></i> ${isOutOfStock ? 'Sold Out' : 'Add to Cart'}
+                                </button>
+                                <a href="https://wa.me/${STORE_PHONE}?text=${whatsappText}" target="_blank"
+                                    class="bg-green-600 hover:bg-green-700 text-white font-bold text-xs py-2.5 px-2 rounded-lg shadow-xs transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+                                </a>
+                            </div>
+                            ${ownerButtonsHtml}
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function filterCategory(category) {
+            activeCategory = category;
+            document.getElementById("catalogHeading").textContent = 
+                category === "All" ? "All Books & Stationery" : category;
+
+            document.querySelectorAll(".cat-btn").forEach(btn => {
+                const span = btn.querySelector("span");
+                if (btn.dataset.cat === category) {
+                    btn.classList.add("bg-blue-50/80");
+                    span.classList.remove("text-gray-700", "font-medium");
+                    span.classList.add("text-fkBlue", "font-bold");
+                } else {
+                    btn.classList.remove("bg-blue-50/80");
+                    span.classList.remove("text-fkBlue", "font-bold");
+                    span.classList.add("text-gray-700", "font-medium");
+                }
+            });
+
+            renderCatalog();
+        }
+
+        function handleSearch(val) {
+            searchQuery = val;
+            document.getElementById("desktopSearchInput").value = val;
+            document.getElementById("mobileSearchInput").value = val;
+            renderCatalog();
+        }
+
+        function resetFilters() {
+            searchQuery = "";
+            document.getElementById("desktopSearchInput").value = "";
+            document.getElementById("mobileSearchInput").value = "";
+            document.getElementById("sortSelect").value = "featured";
+            filterCategory("All");
+        }
+
+        // =========================================================================
+        // 4. SHOPPING CART & WHATSAPP CHECKOUT LOGIC (IN-MEMORY)
+        // =========================================================================
+        function addToCart(bookId) {
+            const book = books.find(b => b.id === bookId);
+            if (!book || book.stock === "Out of Stock") return;
+
+            const existing = cart.find(item => item.id === bookId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...book, qty: 1 });
+            }
+
+            updateCartBadge();
+            renderCart();
+            showToast(`Added "${book.title.substring(0, 28)}..." to Cart`);
+        }
+
+        function updateCartQty(bookId, delta) {
+            const index = cart.findIndex(item => item.id === bookId);
+            if (index === -1) return;
+
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+
+            updateCartBadge();
+            renderCart();
+        }
+
+        function updateCartBadge() {
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById("cartBadge").textContent = totalItems;
+            document.getElementById("drawerCartCount").textContent = totalItems;
+        }
+
+        function toggleCartDrawer(open) {
+            const overlay = document.getElementById("cartOverlay");
+            const drawer = document.getElementById("cartDrawer");
+            if (open) {
+                renderCart();
+                overlay.classList.remove("hidden");
+                setTimeout(() => drawer.classList.remove("translate-x-full"), 10);
+            } else {
+                drawer.classList.add("translate-x-full");
+                setTimeout(() => overlay.classList.add("hidden"), 250);
+            }
+        }
+
+        function renderCart() {
+            const container = document.getElementById("cartItemsContainer");
+            const footer = document.getElementById("cartFooter");
+
+            if (cart.length === 0) {
+                footer.classList.add("hidden");
+                container.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center p-6">
+                        <div class="w-20 h-20 bg-blue-50 text-fkBlue rounded-full flex items-center justify-center text-3xl mb-3">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-800 text-base">Your Book Cart is Empty</h3>
+                        <p class="text-xs text-gray-500 mt-1 max-w-xs">Explore school books, competitive exam guides, or stationery and enjoy free delivery within 1.5 km!</p>
+                        <button onclick="toggleCartDrawer(false)" class="mt-4 bg-fkBlue text-white text-xs font-bold px-5 py-2.5 rounded-lg shadow hover:bg-fkBlueDark transition">
+                            Browse Books
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            footer.classList.remove("hidden");
+
+            let totalMrp = 0;
+            let totalPayable = 0;
+
+            container.innerHTML = cart.map(item => {
+                totalMrp += item.mrp * item.qty;
+                totalPayable += item.price * item.qty;
+
+                return `
+                    <div class="bg-white p-3 rounded-xl border border-gray-200 shadow-2xs flex gap-3 items-center">
+                        <img src="${item.image}" alt="${item.title}" 
+                            onerror="this.src='https://placehold.co/80x100/2874f0/ffffff?text=Book'"
+                            class="w-14 h-18 object-cover rounded border border-gray-100 shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-xs sm:text-sm font-bold text-gray-900 truncate">${item.title}</h4>
+                            <p class="text-[11px] text-gray-500">${item.author}</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="font-extrabold text-sm text-gray-900">₹${item.price * item.qty}</span>
+                                <span class="text-[11px] text-gray-400 line-through">₹${item.mrp * item.qty}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden shrink-0">
+                            <button onclick="updateCartQty('${item.id}', -1)" class="px-2.5 py-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs">-</button>
+                            <span class="px-2.5 py-1 text-xs font-bold bg-white">${item.qty}</span>
+                            <button onclick="updateCartQty('${item.id}', 1)" class="px-2.5 py-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs">+</button>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+
+            const totalDiscount = Math.max(0, totalMrp - totalPayable);
+            document.getElementById("cartTotalMrp").textContent = `₹${totalMrp}`;
+            document.getElementById("cartTotalDiscount").textContent = `- ₹${totalDiscount}`;
+            document.getElementById("cartFinalAmount").textContent = `₹${totalPayable}`;
+        }
+
+        function checkoutViaWhatsApp() {
+            if (cart.length === 0) return;
+
+            const address = document.getElementById("customerAddressInput").value.trim();
+            const zoneRadio = document.querySelector('input[name="deliveryZone"]:checked');
+            const deliveryMode = zoneRadio && zoneRadio.value === "pickup" 
+                ? "Store Pickup (Arwal Block, Opp. Sudha Dairy)" 
+                : "Home Delivery (Within 1.5 km - FREE)";
+
+            let totalPayable = 0;
+            const itemsList = cart.map((item, idx) => {
+                const sub = item.price * item.qty;
+                totalPayable += sub;
+                return `${idx + 1}. *${item.title}* (x${item.qty}) - ₹${sub}`;
+            }).join("\n");
+
+            const message = 
+                `📚 *NEW ORDER - SHYAMJIT BOOK CENTRE* 📚\n` +
+                `----------------------------------\n` +
+                `${itemsList}\n` +
+                `----------------------------------\n` +
+                `💰 *Total Amount:* ₹${totalPayable}\n` +
+                `🚚 *Mode:* ${deliveryMode}\n` +
+                `📍 *Customer Details:* ${address || "Will share location on chat"}\n\n` +
+                `Please confirm my order!`;
+
+            const whatsappUrl = `https://wa.me/${STORE_PHONE}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, "_blank");
+        }
+
+        // =========================================================================
+        // 5. OWNER / ADMIN AUTHENTICATION, SETTINGS & FIRESTORE CLOUD CRUD
+        // =========================================================================
+        function syncOwnerUI() {
+            const adminBtnText = document.getElementById("adminBtnText");
+            const ownerBar = document.getElementById("ownerControlBar");
+
+            if (isOwnerLoggedIn) {
+                adminBtnText.textContent = "Owner Active";
+                ownerBar.classList.remove("hidden");
+            } else {
+                adminBtnText.textContent = "Owner Login";
+                ownerBar.classList.add("hidden");
+            }
+            updateLoginHintUI();
+            renderCatalog();
+        }
+
+        function openAdminModal() {
+            if (isOwnerLoggedIn) {
+                document.getElementById("ownerControlBar").scrollIntoView({ behavior: "smooth" });
+                showToast("You are already logged in as Owner!");
+                return;
+            }
+            updateLoginHintUI();
+            document.getElementById("loginErrorMsg").classList.add("hidden");
+            document.getElementById("adminPasswordInput").value = "";
+            document.getElementById("adminLoginModal").classList.remove("hidden");
+        }
+
+        function closeAdminModal() {
+            document.getElementById("adminLoginModal").classList.add("hidden");
+        }
+
+        function toggleInputVisibility(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            if (!input || !icon) return;
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const pwd = document.getElementById("adminPasswordInput").value;
+            if (pwd === activeOwnerPassword) {
+                isOwnerLoggedIn = true;
+                sessionStorage.setItem("shyamjit_owner_auth", "true");
+                closeAdminModal();
+                syncOwnerUI();
+                showToast("Welcome Owner! Cloud inventory controls unlocked.");
+            } else {
+                document.getElementById("loginErrorMsg").classList.remove("hidden");
+            }
+        }
+
+        function logoutOwner() {
+            isOwnerLoggedIn = false;
+            sessionStorage.removeItem("shyamjit_owner_auth");
+            syncOwnerUI();
+            showToast("Logged out of Owner Mode.");
+        }
+
+        // --- Owner Settings Modal Logic (Change Password) ---
+        function openOwnerSettingsModal() {
+            if (!isOwnerLoggedIn) {
+                openAdminModal();
+                return;
+            }
+            document.getElementById("currentOwnerPwdInput").value = "";
+            document.getElementById("newOwnerPwdInput").value = "";
+            document.getElementById("confirmOwnerPwdInput").value = "";
+            document.getElementById("settingsErrorMsg").classList.add("hidden");
+            document.getElementById("ownerSettingsModal").classList.remove("hidden");
+        }
+
+        function closeOwnerSettingsModal() {
+            document.getElementById("ownerSettingsModal").classList.add("hidden");
+        }
+
+        async function handleChangeOwnerPassword(e) {
+            e.preventDefault();
+            if (!isOwnerLoggedIn) return;
+
+            const currentPwd = document.getElementById("currentOwnerPwdInput").value;
+            const newPwd = document.getElementById("newOwnerPwdInput").value.trim();
+            const confirmPwd = document.getElementById("confirmOwnerPwdInput").value.trim();
+            const errorBox = document.getElementById("settingsErrorMsg");
+            const errorText = document.getElementById("settingsErrorText");
+
+            const showSettingsError = (msg) => {
+                errorText.textContent = msg;
+                errorBox.classList.remove("hidden");
+            };
+
+            if (currentPwd !== activeOwnerPassword) {
+                showSettingsError("Current password is incorrect!");
+                return;
+            }
+
+            if (newPwd.length < 4) {
+                showSettingsError("New password must be at least 4 characters long.");
+                return;
+            }
+
+            if (newPwd !== confirmPwd) {
+                showSettingsError("New password and Confirm password do not match!");
+                return;
+            }
+
+            if (newPwd === currentPwd) {
+                showSettingsError("New password must be different from the current password.");
+                return;
+            }
+
+            errorBox.classList.add("hidden");
+            activeOwnerPassword = newPwd;
+            localStorage.setItem(LOCAL_PWD_KEY, activeOwnerPassword);
+            updateLoginHintUI();
+            closeOwnerSettingsModal();
+
+            // Sync new password to Firebase Cloud if connected
+            if (ownerSettingsDocRef && currentUser) {
+                try {
+                    await setDoc(ownerSettingsDocRef, {
+                        password: activeOwnerPassword,
+                        updatedAt: Date.now()
+                    }, { merge: true });
+                    showToast("Owner password updated & synced across devices!");
+                    return;
+                } catch (err) {
+                    console.error("Cloud password sync error:", err);
+                }
+            }
+
+            showToast("Owner password updated successfully!");
+        }
+
+        // --- Add / Edit Book Modal Logic ---
+        function openBookFormModal(bookId = null) {
+            if (!isOwnerLoggedIn) {
+                openAdminModal();
+                return;
+            }
+
+            const modal = document.getElementById("bookFormModal");
+            const titleEl = document.getElementById("bookFormTitle");
+            uploadedBase64Image = "";
+            document.getElementById("bookFileInput").value = "";
+
+            if (bookId) {
+                const book = books.find(b => b.id === bookId);
+                if (!book) return;
+                titleEl.innerHTML = `<i class="fa-solid fa-pen-to-square text-fkYellow"></i> Edit Book Listing`;
+                document.getElementById("editBookId").value = book.id;
+                document.getElementById("bookTitleInput").value = book.title;
+                document.getElementById("bookAuthorInput").value = book.author;
+                document.getElementById("bookCategoryInput").value = book.category;
+                document.getElementById("bookMrpInput").value = book.mrp;
+                document.getElementById("bookPriceInput").value = book.price;
+                document.getElementById("bookStockInput").value = book.stock || "In Stock";
+                document.getElementById("bookImageUrlInput").value = book.image.startsWith("data:") ? "" : book.image;
+                document.getElementById("bookImagePreview").src = book.image;
+                uploadedBase64Image = book.image.startsWith("data:") ? book.image : "";
+            } else {
+                titleEl.innerHTML = `<i class="fa-solid fa-book-medical text-fkYellow"></i> Add New Book / Item`;
+                document.getElementById("editBookId").value = "";
+                document.getElementById("bookTitleInput").value = "";
+                document.getElementById("bookAuthorInput").value = "";
+                document.getElementById("bookCategoryInput").value = "School Books";
+                document.getElementById("bookMrpInput").value = "";
+                document.getElementById("bookPriceInput").value = "";
+                document.getElementById("bookStockInput").value = "In Stock";
+                document.getElementById("bookImageUrlInput").value = "";
+                document.getElementById("bookImagePreview").src = "https://placehold.co/300x380/2874f0/ffffff?text=New+Book";
+            }
+
+            modal.classList.remove("hidden");
+        }
+
+        function closeBookFormModal() {
+            document.getElementById("bookFormModal").classList.add("hidden");
+        }
+
+        function handlePhotoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement("canvas");
+                    const maxDim = 360;
+                    let w = img.width;
+                    let h = img.height;
+                    if (w > h && w > maxDim) {
+                        h *= maxDim / w;
+                        w = maxDim;
+                    } else if (h > maxDim) {
+                        w *= maxDim / h;
+                        h = maxDim;
+                    }
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, w, h);
+                    uploadedBase64Image = canvas.toDataURL("image/jpeg", 0.78);
+                    document.getElementById("bookImagePreview").src = uploadedBase64Image;
+                    document.getElementById("bookImageUrlInput").value = "";
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateImagePreviewFromUrl(url) {
+            if (url.trim()) {
+                uploadedBase64Image = "";
+                document.getElementById("bookImagePreview").src = url.trim();
+            }
+        }
+
+        async function saveBookListing(e) {
+            e.preventDefault();
+            if (!isOwnerLoggedIn) return;
+
+            const editId = document.getElementById("editBookId").value;
+            const title = document.getElementById("bookTitleInput").value.trim();
+            const author = document.getElementById("bookAuthorInput").value.trim();
+            const category = document.getElementById("bookCategoryInput").value;
+            const mrp = parseFloat(document.getElementById("bookMrpInput").value);
+            const price = parseFloat(document.getElementById("bookPriceInput").value);
+            const stock = document.getElementById("bookStockInput").value;
+            const urlInput = document.getElementById("bookImageUrlInput").value.trim();
+
+            const finalImage = uploadedBase64Image || urlInput || 
+                `https://placehold.co/300x380/2874f0/ffffff?text=${encodeURIComponent(title.substring(0, 18))}`;
+
+            const bookId = editId || ("bk-" + Date.now());
+            const bookPayload = {
+                id: bookId,
+                title,
+                author,
+                category,
+                mrp,
+                price,
+                stock,
+                image: finalImage,
+                updatedAt: Date.now()
+            };
+
+            closeBookFormModal();
+
+            // Save to Firestore Cloud if connected
+            if (booksCollectionRef && currentUser) {
+                try {
+                    await setDoc(doc(booksCollectionRef, bookId), bookPayload);
+                    showToast(editId ? "Updated live across all devices!" : "Added live to Shyamjit Book Centre!");
+                    return;
+                } catch (err) {
+                    console.error("Cloud save failed:", err);
+                    showToast("Cloud sync error, updating local view.", "error");
+                }
+            }
+
+            // Fallback local update
+            if (editId) {
+                const idx = books.findIndex(b => b.id === editId);
+                if (idx !== -1) books[idx] = bookPayload;
+            } else {
+                books.unshift(bookPayload);
+            }
+            syncCartWithLatestCatalog();
+            renderCatalog();
+            showToast(editId ? "Book updated!" : "New book added!");
+        }
+
+        async function deleteBookListing(bookId) {
+            if (!isOwnerLoggedIn) return;
+
+            if (booksCollectionRef && currentUser) {
+                try {
+                    await deleteDoc(doc(booksCollectionRef, bookId));
+                    showToast("Listing deleted live from store.");
+                    return;
+                } catch (err) {
+                    console.error("Cloud delete failed:", err);
+                    showToast("Failed to delete from cloud.", "error");
+                }
+            }
+
+            books = books.filter(b => b.id !== bookId);
+            syncCartWithLatestCatalog();
+            renderCatalog();
+            showToast("Listing deleted from store.");
+        }
+
+        // =========================================================================
+        // 6. CUSTOM TOAST NOTIFICATION SYSTEM & GLOBAL BINDINGS
+        // =========================================================================
+        function showToast(message, type = "success") {
+            const container = document.getElementById("toastContainer");
+            const toast = document.createElement("div");
+            const bgClass = type === "error" ? "bg-red-600" : "bg-slate-900";
+            toast.className = `${bgClass} text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-full shadow-lg flex items-center gap-2 transition-all duration-300 transform translate-y-2 opacity-0`;
+            toast.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-circle-exclamation text-red-200' : 'fa-circle-check text-fkYellow'}"></i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            requestAnimationFrame(() => {
+                toast.classList.remove("translate-y-2", "opacity-0");
+            });
+
+            setTimeout(() => {
+                toast.classList.add("opacity-0", "translate-y-2");
+                setTimeout(() => toast.remove(), 300);
+            }, 2600);
+        }
+
+        // Expose handlers globally for inline HTML attributes inside type="module"
+        Object.assign(window, {
+            filterCategory,
+            handleSearch,
+            resetFilters,
+            renderCatalog,
+            addToCart,
+            updateCartQty,
+            toggleCartDrawer,
+            renderCart,
+            checkoutViaWhatsApp,
+            openAdminModal,
+            closeAdminModal,
+            toggleInputVisibility,
+            handleAdminLogin,
+            logoutOwner,
+            openOwnerSettingsModal,
+            closeOwnerSettingsModal,
+            handleChangeOwnerPassword,
+            openBookFormModal,
+            closeBookFormModal,
+            handlePhotoUpload,
+            updateImagePreviewFromUrl,
+            saveBookListing,
+            deleteBookListing
+        });
+
+        // Initialize Page & Cloud Sync
+        window.addEventListener("DOMContentLoaded", () => {
+            updateCartBadge();
+            syncOwnerUI();
+            initFirebaseCloudSync();
+        });
+    </script>
+</body>
+</html>
